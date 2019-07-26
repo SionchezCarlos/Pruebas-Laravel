@@ -11,6 +11,8 @@
 |
 */
 
+//Este proyecto cuenta con una instalacion de Laravel Telescope.
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,3 +24,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::apiResource('pensamientos', 'pensamientoController');
 
 Route::get('/CRUDArchivosAJAX/CrudArchivosAjax', 'CrudArchivosAjaxController@index');
+Route::get('/CRUDArchivosAJAX/CrudArchivosAjax/store', 'CrudArchivosAjaxController@store');
