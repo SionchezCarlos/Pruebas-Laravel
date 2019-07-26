@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Visitas;
+
+use Validator;
+use Auth;
+
 class CrudArchivosAjaxController extends Controller
 {
     /**
@@ -13,7 +18,9 @@ class CrudArchivosAjaxController extends Controller
      */
     public function index()
     {
-        return View('CRUDArchivosAJAX.CrudArchivosAjax');
+        $Visitas = Visitas::all();
+
+        return View('CRUDArchivosAJAX.CrudArchivosAjax', compact('Visitas'));
     }
 
     /**
@@ -34,7 +41,27 @@ class CrudArchivosAjaxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required|min:2|max:50',
+            'ubicacion' => 'required|min:8|max:500',
+            'nota' => 'required|min:8|max:500',
+        ]);
+
+        $errors = $validator->errors();
+
+        if ($validator->fails()) {
+            return response()->json(['mensaje' => 'Error.']);
+        }else{
+            $Visita = Visitas::create([
+                'nombre' => $request->nombre,
+                'ubicacion' => $request->ubicacion,
+                'nota' => $request->nota,
+                'state' => 1,
+                'created_by' => Auth::User()->id,
+            ]);
+
+            return response()->json(['mensaje' => 'Listo.']);
+        }
     }
 
     /**
