@@ -24,4 +24,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::apiResource('pensamientos', 'pensamientoController');
 
 Route::get('/CRUDArchivosAJAX/CrudArchivosAjax', 'CrudArchivosAjaxController@index');
-Route::get('/CRUDArchivosAJAX/CrudArchivosAjax/store', 'CrudArchivosAjaxController@store');
+Route::post('/CRUDArchivosAJAX/CrudArchivosAjax/store', 'CrudArchivosAjaxController@store');
