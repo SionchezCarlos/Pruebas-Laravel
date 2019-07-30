@@ -143,7 +143,6 @@ function guardar(element){
     $('#formularioMain').submit();
 }
 
-
 $('#formularioMain').submit(function(event) {
     event.preventDefault();
     var $this = $(this);
