@@ -38,40 +38,45 @@
 		</div>
 
   		<div class="container">
+            
+            <form id="formularioMain" file="true" action="/CRUDArchivosAJAX/CrudArchivosAjax/store" enctype="multipart/form-data" method="POST">
+                {{csrf_field()}}
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="nombre" name="nombre" type="text">
+                    <label for="nombre">Nombre</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="ubicacion" name="ubicacion" type="text">
+                    <label for="ubicacion">Ubicación</label>
+                  </div>
+                </div>
 
-  		    <div class="row">
-  		      <div class="input-field col s6">
-          		<input id="nombre" name="nombre" type="text">
-          		<label for="nombre">Nombre</label>
-  		      </div>
-  		      <div class="input-field col s6">
-          		<input id="ubicacion" name="ubicacion" type="text">
-          		<label for="ubicacion">Ubicación</label>
-  		      </div>
-  		    </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                         <textarea id="nota" name="nota" class="materialize-textarea"></textarea>
+                         <label for="nota">Nota</label>
+                    </div>
+                </div>
 
-  		    <div class="row">
-    			<div class="input-field col s12">
-    			     <textarea id="nota" name="nota" class="materialize-textarea"></textarea>
-    			     <label for="nota">Nota</label>
-    			</div>
-  		    </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <div class="file-field input-field">
+                      <div class="btn">
+                        <span>Foto</span>
+                        <input id="foto" name="foto" type="file">
+                      </div>
+                      <div class="file-path-wrapper">
+                        <input class="file-path" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-  		    <div class="row">
-  		      <div class="input-field col s12">
-    			<div class="file-field input-field">
-    			  <div class="btn">
-    			    <span>Foto</span>
-    			    <input id="foto" name="foto[]" type="file">
-    			  </div>
-    			  <div class="file-path-wrapper">
-    			    <input class="file-path" type="text">
-    			  </div>
-    			</div>
-  		      </div>
-  		    </div>
+            </form>
 
-			<button class="btn waves-effect waves-light" id="guardar" name="guardar" type="submit" onclick="guardar()">Guardar</button>
+            <button class="btn waves-effect waves-light" onclick="guardar(this)">Guardar</button>
+
   		</div>
   	{{-- Formulario - } --}}
 
@@ -134,30 +139,27 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
-	function guardar(){
-		var nombre = $('#nombre').val();
-		var ubicacion = $('#ubicacion').val();
-		var nota = $('#nota').val();
+function guardar(element){
+    $('#formularioMain').submit();
+}
 
-		$.ajax({
-			url: '/CRUDArchivosAJAX/CrudArchivosAjax/store',
-			type: 'GET',
-			data: {
-				nombre: nombre, 
-				ubicacion: ubicacion, 
-				nota: nota,
-			},
-		})
-		.done(function(data) {
 
-			console.log(data.mensaje);
+$('#formularioMain').submit(function(event) {
+    event.preventDefault();
+    var $this = $(this);
+    console.log($this);
 
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
-	}
+    $.ajax({
+      url: "/CRUDArchivosAJAX/CrudArchivosAjax/store",
+      type: "POST",
+      data: new FormData(this),
+      processData: false,
+      contentType: false,
+        success: function(data) {
+             // console.log(data.data);
+             alert(data.data);
+        }
+    });
+    
+});
 </script>
