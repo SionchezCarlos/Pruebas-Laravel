@@ -45,6 +45,7 @@ class CrudArchivosAjaxController extends Controller
             'nombre' => 'required|min:2|max:50',
             'ubicacion' => 'required|min:8|max:500',
             'nota' => 'required|min:8|max:500',
+            'foto' => 'required',
         ]);
 
         $errors = $validator->errors();
