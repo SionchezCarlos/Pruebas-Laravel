@@ -59,8 +59,17 @@ class CrudArchivosAjaxController extends Controller
                 'state' => 1,
                 'created_by' => Auth::User()->id,
             ]);
+            
+            $id = $Visita->id;
+            $foto = $request->foto;
+            $carpeta = '/imagesVisitas/';
 
-            return response()->json(['mensaje' => 'Listo.']);
+            $nombreArchivoFoto = $id.'_'.$foto->getClientOriginalName();
+            $foto = $foto->move(public_path().$carpeta, $nombreArchivoFoto);
+            $Visita->foto = $carpeta.$nombreArchivoFoto;
+            $Visita->save();
+            
+            return response()->json(['data' => 'Listo.']);
         }
     }
 
